@@ -14,6 +14,8 @@ class PipelineStack(Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         source_output = codepipeline.Artifact()
+        unit_test_output = codepipeline.Artifact()
+
         repo_connection = RepoConnection(self)
 
         pipeline = codepipeline.Pipeline(
@@ -28,34 +30,32 @@ class PipelineStack(Stack):
         code_quality_build = codebuild.PipelineProject(
             self,
             "CodeQuality",
-            build_spec=codebuild.BuildSpec.from_source_filename("buildspec_test.yml"),
+            build_spec=codebuild.BuildSpec.from_source_filename(
+                "buildspec_test.yml"
+            ),
             environment=codebuild.BuildEnvironment(
                 build_image=codebuild.LinuxLambdaBuildImage.AMAZON_LINUX_2023_PYTHON_3_12,
                 compute_type=codebuild.ComputeType.LAMBDA_10GB,
             ),
         )
 
-        source_output = codepipeline.Artifact()
-        unit_test_output = codepipeline.Artifact()
-
-        source_action = self.source.source_action(source_output)
-
-        pipeline.add_stage(stage_name="Source", actions=[source_action])
-        build_action = codepipeline_actions.CodeBuildAction(
-            action_name="Unit-Test",
-            project=code_quality_build,
-            input=source_output,  # The build action must use the source action output as input.
-            outputs=[unit_test_output],
-        )
-
-        pipeline.add_stage(stage_name="Code-Quality-Testing", actions=[build_action])
-
-
-
+        source_action = repo_connection.source_action(source_output)
 
         pipeline.add_stage(
             stage_name="Source",
-            actions=[repo_connection.source_action(source_output)],
+            actions=[source_action],
+        )
+
+        build_action = codepipeline_actions.CodeBuildAction(
+            action_name="Unit-Test",
+            project=code_quality_build,
+            input=source_output,
+            outputs=[unit_test_output],
+        )
+
+        pipeline.add_stage(
+            stage_name="Code-Quality-Testing",
+            actions=[build_action],
         )
 
         validation_project = codebuild.PipelineProject(
@@ -92,6 +92,7 @@ class PipelineStack(Stack):
                 }
             ),
         )
+
         pipeline.add_stage(
             stage_name="Validate",
             actions=[
