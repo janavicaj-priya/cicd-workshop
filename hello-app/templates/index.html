@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hello from AWS</title>
+    <style>
+      :root {
+        --bg-start: #fff;
+        --bg-end: #eef2f7;
+        --text: #232f3e;
+        --muted: #5f6b7a;
+        --accent: #ec7211;
+        --accent-hover: #f8981d;
+        --border: rgba(35, 47, 62, 0.15);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(160deg, var(--bg-start), var(--bg-end));
+        color: var(--text);
+        font-family: 'Segoe UI', Arial, sans-serif;
+        text-align: center;
+      }
+      header,
+      footer {
+        padding: 1rem 1.5rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+      }
+      header {
+        border-bottom: 1px solid var(--border);
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      footer {
+        border-top: 1px solid var(--border);
+      }
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.75rem;
+        padding: 3rem 1.5rem;
+        animation: fade-in 0.6s ease-out;
+      }
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      h1 {
+        max-width: 46rem;
+        font-size: clamp(2.25rem, 5vw, 3.5rem);
+        line-height: 1.15;
+        font-weight: 700;
+      }
+      h1 .highlight {
+        color: var(--accent);
+      }
+      .lead {
+        max-width: 42rem;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--muted);
+      }
+      .button {
+        padding: 0.85rem 2.5rem;
+        border: none;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        box-shadow: 0 4px 14px rgba(236, 114, 17, 0.35);
+        transition:
+          background 0.2s,
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .button:hover {
+        background: var(--accent-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(236, 114, 17, 0.45);
+      }
+      .button:focus-visible {
+        outline: 3px solid var(--text);
+        outline-offset: 3px;
+      }
+      .hero-card {
+        padding: 1.5rem 2rem;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(35, 47, 62, 0.1);
+      }
+      .hero-art {
+        display: block;
+        width: 380px;
+        max-width: 100%;
+      }
+      .hero-art .cloud {
+        fill: none;
+        stroke: var(--text);
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-dasharray: 620;
+        stroke-dashoffset: 620;
+        animation: draw 2.5s ease-out forwards;
+      }
+      @keyframes draw {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      .hero-art .wire {
+        fill: none;
+        stroke: var(--accent);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+      }
+      .hero-art .node {
+        fill: var(--accent);
+        transform-origin: center;
+        animation: pulse 2s ease-in-out infinite;
+      }
+      .hero-art .node:nth-of-type(2) {
+        animation-delay: 0.4s;
+      }
+      .hero-art .node:nth-of-type(3) {
+        animation-delay: 0.8s;
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 0.35;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>AWS CI/CD Workshop Sample Page</header>
+    <main>
+      <h1>Start Building on <span class="highlight">AWS</span> Today</h1>
+      <p class="lead">
+        Whether you are looking for compute power, database storage, content
+        delivery, or other functionality, AWS has the services to help you build
+        sophisticated applications with increased flexibility, scalability and
+        reliability.
+      </p>
+      <button class="button" onclick="location.href = 'https://aws.amazon.com'">
+        Get Started
+      </button>
+      <div class="hero-card">
+        <svg
+          class="hero-art"
+          viewBox="0 0 420 240"
+          role="img"
+          aria-label="Cloud connected to compute nodes"
+        >
+          <path
+            class="cloud"
+            d="M110 150a45 45 0 0 1 8-89 60 60 0 0 1 112-20 50 50 0 0 1 80 40 38 38 0 0 1 10 69z"
+          />
+          <path class="wire" d="M150 150v30h-30v18" />
+          <path class="wire" d="M210 150v40" />
+          <path class="wire" d="M270 150v30h30v18" />
+          <circle class="node" cx="120" cy="206" r="7" />
+          <circle class="node" cx="210" cy="198" r="7" />
+          <circle class="node" cx="300" cy="206" r="7" />
+        </svg>
+      </div>
+    </main>
+    <footer>
+      &copy; {{ year }}, Amazon Web Services, Inc. or its affiliates. All rights
+      reserved.
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+### Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Unit test / coverage reports
+.pytest_cache
+
+# Distribution / packaging
+.Python
+build/
+dist/
+downloads/
+lib/
+MANIFEST
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+# Workshop helper scripts
+fast-forward
